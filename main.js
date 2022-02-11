@@ -54,9 +54,11 @@ class BoardView{
     }
   }
   play(){
-    this.clean()
-    this.drawElement()
-    
+    if(this.board.playing){
+      this.clean()
+      this.drawElement()
+      this.board.ball.move()
+    }
   }
   
 }
@@ -98,9 +100,12 @@ class Balls{
 
     this.kind="circle"
     this.direction = 1
-    this.bounce_angle = 0;
-    this.max_bounce_angle = Math.PI / 12;
-    this.speed = 2;
+
+  }
+
+  move(){
+    this.x += (this.speed_x * this.direction);
+    this.y += this.speed_y;
   }
 }
 
@@ -113,6 +118,7 @@ let ball = new Balls(40,100,10,board)
 let Bar = new Bars(0,50,20,100,board);
 let Bar2 = new Bars(680,80,20,100,board);
 
+boardView.drawElement();
 
 document.addEventListener("keydown", (ev)=>{
   if(ev.code == "ArrowDown"){
@@ -128,6 +134,10 @@ document.addEventListener("keydown", (ev)=>{
   }else if( ev.code == "KeyW"){
     ev.preventDefault;
     Bar.up()
+  }else if(ev.code == "Space"){
+    ev.preventDefault;
+    board.playing = !board.playing
+
   }
 })
 
