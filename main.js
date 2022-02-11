@@ -63,27 +63,43 @@ class Bars{
 
     this.board.bars.push(this)
     this.kind = "square";
-    
+    this.speed = 10;
   }
 
   down(){
-    
+    this.y += this.speed
   }
   up(){
-    
+    this.y -= this.speed
+  }
+  toString(){
+    return "x: "+ this.x + " y: " + this.y
+  }
+}
+
+let board = new Board(700,300);
+
+let canvas = document.getElementById("canvas")
+
+let boardView = new BoardView(canvas,board);
+let Bar = new Bars(0,50,20,100,board);
+let Bar2 = new Bars(680,80,20,100,board);
+
+
+document.addEventListener("keydown", (ev)=>{
+  if(ev.code == "ArrowDown"){
+    ev.preventDefault;
+    Bar2.down()
+  }else if( ev.code == "ArrowUp"){
+    ev.preventDefault;
+    Bar2.up()
   }
   
-}
+})
+
+
 window.addEventListener( "load", main)
 
 function main(){
-  let board = new Board(700,300);
-
-  let canvas = document.getElementById("canvas")
-
-  let boardView = new BoardView(canvas,board);
-  let Bar = new Bars(0,50,20,100,board);
-  let Bar2 = new Bars(680,80,20,100,board);
-
   boardView.drawElement()
 }
