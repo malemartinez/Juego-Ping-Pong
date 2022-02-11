@@ -4,13 +4,15 @@ class Balls{
     this.y = y;
     this.radius = radius;
     this.board = board;
-    this.speed_x = 2;
+    this.speed_x = 2; //pixeles que se debe mover en la posicion x
     this.speed_y = 0;
     board.ball= this
-    this.board.bars.push(this)
+    this.board.bars.push(this) 
 
     this.kind="circle"
     this.direction = 1
+
+    //atributos necesarios para mover la bola 
     this.bounce_angle = 0;
     this.max_bounce_angle = Math.PI / 12;
     this.speed = 2;
@@ -28,6 +30,8 @@ class Balls{
     this.x += (this.speed_x * this.direction);
     this.y += this.speed_y;
   }
+
+  //metodo para cambiar los atributos despues de que colisione con la barra
   collision(bar){
     let relative_intersect_y = ( bar.y + (bar.height / 2) ) - this.y;
 

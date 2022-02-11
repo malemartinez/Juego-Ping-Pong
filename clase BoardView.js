@@ -11,6 +11,7 @@ class BoardView{
     this.contexto.clearRect(0,0,this.board.width,this.board.height)
   }
 
+  //dibuja los elementos que estan en el arreglo
   drawElement(){
     for (let i = this.board.elements.length - 1; i >= 0 ; i--) {
       let el = this.board.elements[i];
@@ -58,8 +59,8 @@ class BoardView{
     }
   }
 
+  //valida la colision entre elementos. Devuelve true o false
   hit(a,b){
-    //valida la colision entre elementos. Devuelve true o false
     //Revisa si a colisiona con b
     let hit = false;
     //Colisiones horizontales
