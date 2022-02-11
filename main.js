@@ -25,6 +25,9 @@ class BoardView{
     this.canvas.width = board.width;
     this.contexto = canvas.getContext("2d")
   }
+  clean(){
+    this.contexto.clearRect(0,0,this.board.width,this.board.height)
+  }
 
   drawElement(){
     for (let i = this.board.elements.length - 1; i >= 0 ; i--) {
@@ -49,6 +52,11 @@ class BoardView{
         ctx.closePath()
         break;
     }
+  }
+  play(){
+    this.clean()
+    this.drawElement()
+    
   }
   
 }
@@ -77,11 +85,31 @@ class Bars{
   }
 }
 
+class Balls{
+  constructor(x,y,radius, board){
+    this.x = x;
+    this.y = y;
+    this.radius = radius;
+    this.board = board;
+    this.speed_x = 2;
+    this.speed_y = 0;
+    board.ball= this
+    this.board.bars.push(this)
+
+    this.kind="circle"
+    this.direction = 1
+    this.bounce_angle = 0;
+    this.max_bounce_angle = Math.PI / 12;
+    this.speed = 2;
+  }
+}
+
 let board = new Board(700,300);
 
 let canvas = document.getElementById("canvas")
 
 let boardView = new BoardView(canvas,board);
+let ball = new Balls(40,100,10,board)
 let Bar = new Bars(0,50,20,100,board);
 let Bar2 = new Bars(680,80,20,100,board);
 
@@ -94,12 +122,18 @@ document.addEventListener("keydown", (ev)=>{
     ev.preventDefault;
     Bar2.up()
   }
-  
+  if(ev.code == "KeyS"){
+    ev.preventDefault;
+    Bar.down()
+  }else if( ev.code == "KeyW"){
+    ev.preventDefault;
+    Bar.up()
+  }
 })
 
 
-window.addEventListener( "load", main)
-
-function main(){
-  boardView.drawElement()
+function Controller(){
+  boardView.play()
+  window.requestAnimationFrame(Controller)
 }
+window.requestAnimationFrame(Controller)
