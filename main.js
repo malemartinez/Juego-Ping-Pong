@@ -25,6 +25,53 @@ class BoardView{
     this.canvas.width = board.width;
     this.contexto = canvas.getContext("2d")
   }
+
+  drawElement(){
+    for (let i = this.board.elements.length - 1; i >= 0 ; i--) {
+      let el = this.board.elements[i];
+     
+      this.draw(this.contexto,el)
+    }
+  }
+  //Este metodo lo usamos para dibujar en el canvas
+  draw(ctx,element){
+    
+    switch (element.kind) {
+      case "square":
+        
+        ctx.fillRect(element.x, element.y, element.width, element.height)
+        break;
+      case "circle":
+        
+        ctx.beginPath();
+        ctx.arc(element.x, element.y, element.radius,0,7);
+        ctx.fill();
+        ctx.closePath()
+        break;
+    }
+  }
+  
+}
+
+class Bars{
+  constructor(x,y,width,height,board){
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.board = board;
+
+    this.board.bars.push(this)
+    this.kind = "square";
+    
+  }
+
+  down(){
+    
+  }
+  up(){
+    
+  }
   
 }
 window.addEventListener( "load", main)
@@ -35,6 +82,8 @@ function main(){
   let canvas = document.getElementById("canvas")
 
   let boardView = new BoardView(canvas,board);
+  let Bar = new Bars(0,50,20,100,board);
+  let Bar2 = new Bars(680,80,20,100,board);
 
-  
+  boardView.drawElement()
 }
